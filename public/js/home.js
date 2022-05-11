@@ -5,12 +5,12 @@ let data = {
     transactions: []
 };
 
-document.getElementById("button-logout").addEventListener("click" , logout);
-document.getElementById("transactions-button").addEventListener("click", function() {
+document.getElementById("button-logout").addEventListener("click", logout);
+document.getElementById("transactions-button").addEventListener("click", function () {
     window.location.href = "transactions.html"
 })
 
-document.getElementById("transaction-form").addEventListener("submit", function(e) {
+document.getElementById("transaction-form").addEventListener("submit", function (e) {
     e.preventDefault();
 
     const value = parseFloat(document.getElementById("value-input").value);
@@ -22,7 +22,7 @@ document.getElementById("transaction-form").addEventListener("submit", function(
         value: value, type: type, description: description, date: date
     });
 
-    saveData(data); 
+    saveData(data);
     e.target.reset();
     myModal.hide();
 
@@ -31,25 +31,25 @@ document.getElementById("transaction-form").addEventListener("submit", function(
     getTotal();
 
     alert("Muito bem! Seu lançamento foi adicionado.");
-    
+
 });
 
 
-checkLogged(); 
+checkLogged();
 
 function checkLogged() {
-    if(session) {
+    if (session) {
         sessionStorage.setItem("logged", session);
         logged = session;
     }
 
-    if(!logged) {
+    if (!logged) {
         window.location.href = "index.html";
         return;
     }
 
     const dataUser = localStorage.getItem(logged);
-    if(dataUser) {
+    if (dataUser) {
         data = JSON.parse(dataUser);
     }
 
@@ -68,15 +68,15 @@ function logout() {
 function getCashIn() {
     const transactions = data.transactions;
 
-    const cashIn = transactions.filter((item) => item.type ==="1");
+    const cashIn = transactions.filter((item) => item.type === "1");
 
-    if(cashIn.length) {
+    if (cashIn.length) {
         let cashInHtml = ``;
         let limit = 0;
 
-        if(cashIn.length > 5) {
+        if (cashIn.length > 5) {
             limit = 5;
-        }   else {
+        } else {
             limit = cashIn.length;
         }
 
@@ -98,7 +98,7 @@ function getCashIn() {
             </div>
         </div>
         `
-            
+
         }
 
         document.getElementById("cash-in-list").innerHTML = cashInHtml;
@@ -110,15 +110,15 @@ function getCashIn() {
 function getCashOut() {
     const transactions = data.transactions;
 
-    const cashIn = transactions.filter((item) => item.type ==="2");
+    const cashIn = transactions.filter((item) => item.type === "2");
 
-    if(cashIn.length) {
+    if (cashIn.length) {
         let cashInHtml = ``;
         let limit = 0;
 
-        if(cashIn.length > 5) {
+        if (cashIn.length > 5) {
             limit = 5;
-        }   else {
+        } else {
             limit = cashIn.length;
         }
 
@@ -140,7 +140,7 @@ function getCashOut() {
             </div>
         </div>
         `
-            
+
         }
 
         document.getElementById("cash-out-list").innerHTML = cashInHtml;
@@ -152,7 +152,7 @@ function getTotal() {
     let total = 0;
 
     transactions.forEach((item) => {
-        if(item.type === "1") {
+        if (item.type === "1") {
             total += item.value;
         } else {
             total -= item.value;
